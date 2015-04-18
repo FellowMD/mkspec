@@ -5,7 +5,7 @@ trap 'rm -rf $sandbox_dir' EXIT
 
 mkspec=`dirname $0`/mkspec
 
-pushd $sandbox_dir
+cd $sandbox_dir
 
 function it {
   current_test="$1"
@@ -14,13 +14,13 @@ function it {
 function pass {
   green='\033[0;32m'
   clear_formatting='\033[0m'
-  echo -e "${green}it ${current_test}...✓${clear_formatting}"
+  echo -e "${green}✓ it ${current_test}${clear_formatting}"
 }
 
 function fail {
   red='\033[0;31m'
   clear_formatting='\033[0m'
-  echo -e "${red}it ${current_test}...✗${clear_formatting}"
+  echo -e "${red}✗ it ${current_test}${clear_formatting}"
 }
 
 function wipe {
