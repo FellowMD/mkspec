@@ -3,7 +3,7 @@
 sandbox_dir=`mktemp -d -t sandbox`
 trap 'rm -rf $sandbox_dir' EXIT
 
-mkspec=`dirname $0`/mkspec
+mkspec=$(cd "$(dirname "$0")"; pwd)/mkspec
 
 cd $sandbox_dir
 
