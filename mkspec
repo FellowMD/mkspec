@@ -16,4 +16,11 @@ spec_filename="${filename}_spec${extension}"
 mkdir -p $path
 mkdir -p spec/$path
 touch $path/$prod_filename
-touch spec/$path/$spec_filename
+
+if [ "$extension" ]; then
+  support_dir=`dirname $0`/support/mkspec
+  rb_spec=$support_dir/spec.rb
+  cp $rb_spec spec/$path/$spec_filename
+else
+  touch spec/$path/$spec_filename
+fi
