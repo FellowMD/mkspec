@@ -1,7 +1,9 @@
+#!/usr/bin/env bash
+
 sandbox_dir=`mktemp -d -t sandbox`
 trap 'rm -rf $sandbox_dir' EXIT
 
-mkspec_path=`dirname $0`/mkspec
+mkspec=`dirname $0`/mkspec
 
 pushd $sandbox_dir
 
@@ -37,5 +39,30 @@ function check {
 }
 
 it 'exists'
-  test -x $mkspec_path
+  test -x $mkspec
 check
+
+it 'creates the production code file'
+  $mkspec code
+  test -f code
+check
+
+it 'creates the spec file'
+  $mkspec code
+  test -f spec/code_spec
+check
+
+it 'preserves extension of prod file'
+  $mkspec code.rb
+  test -f code.rb
+check
+
+it 'creates spec file with proper extension'
+  $mkspec code.rb
+  test -f spec/code_spec.rb
+check
+
+# it 'makes directories as necessary for code'
+#   $mkspec app/code.rb
+#   test -d app
+# check
