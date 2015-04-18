@@ -7,27 +7,24 @@ mkspec=`dirname $0`/mkspec
 
 pushd $sandbox_dir
 
-function check {
-  if [ "$?" == 0 ]; then
-    echo '✓'
-  else
-    echo '✗'
-    exit 1
-  fi
-}
-
 function it {
   current_test="$1"
 }
+
 function pass {
   green='\033[0;32m'
   clear_formatting='\033[0m'
   echo -e "${green}it ${current_test}...✓${clear_formatting}"
 }
+
 function fail {
   red='\033[0;31m'
   clear_formatting='\033[0m'
   echo -e "${red}it ${current_test}...✗${clear_formatting}"
+}
+
+function wipe {
+  rm -rf $sandbox_dir/*
 }
 
 function check {
@@ -36,6 +33,7 @@ function check {
   else
     fail
   fi
+  wipe
 }
 
 it 'exists'
@@ -62,7 +60,12 @@ it 'creates spec file with proper extension'
   test -f spec/code_spec.rb
 check
 
-# it 'makes directories as necessary for code'
-#   $mkspec app/code.rb
-#   test -d app
-# check
+it 'makes directories as necessary for code'
+  $mkspec app/code.rb
+  test -f app/code.rb
+check
+
+it 'makes direcotries as necessary for specs'
+  $mkspec app/code.rb
+  test -f spec/app/code_spec.rb
+check

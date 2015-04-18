@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
 
-prod_file="$1"
-filename="${prod_file%%.*}"
-extension=".${prod_file#*.}"
-if [ "$prod_file" != "$filename$extension" ]; then
+prod_filepath="$1"
+prod_filename=`basename $prod_filepath`
+
+path=`dirname $prod_filepath`
+
+filename="${prod_filename%%.*}"
+extension=".${prod_filename#*.}"
+if [ "$prod_filename" != "$filename$extension" ]; then
   extension=''
 fi
-spec_file="${filename}_spec${extension}"
 
-touch $prod_file
-mkdir -p spec
-touch spec/$spec_file
+spec_filename="${filename}_spec${extension}"
+
+mkdir -p $path
+mkdir -p spec/$path
+touch $path/$prod_filename
+touch spec/$path/$spec_filename
