@@ -13,14 +13,16 @@ fi
 
 spec_filename="${filename}_spec${extension}"
 
+spec_path=spec/${path#app/}
+
 mkdir -p $path
-mkdir -p spec/$path
+mkdir -p $spec_path
 touch $path/$prod_filename
 
 if [ "$extension" ]; then
   support_dir=`dirname $0`/support/mkspec
   rb_spec=$support_dir/spec.rb
-  cp $rb_spec spec/$path/$spec_filename
+  cp $rb_spec $spec_path/$spec_filename
 else
-  touch spec/$path/$spec_filename
+  touch $spec_path/$spec_filename
 fi

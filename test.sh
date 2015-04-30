@@ -61,18 +61,23 @@ it 'creates spec file with proper extension'
 check
 
 it 'makes directories as necessary for code'
-  $mkspec app/lib/code.rb
-  test -f app/lib/code.rb
+  $mkspec app/models/code.rb
+  test -f app/models/code.rb
 check
 
 it 'makes direcotries as necessary for specs'
-  $mkspec app/code.rb
-  test -f spec/app/code_spec.rb
+  $mkspec models/code.rb
+  test -f spec/models/code_spec.rb
+check
+
+it 'strips app from beginning of spec paths'
+  $mkspec app/models/code.rb
+  test -f spec/models/code_spec.rb
 check
 
 it 'uses a template for ruby specs'
-  $mkspec app/code.rb
-  grep describe spec/app/code_spec.rb >/dev/null
+  $mkspec code.rb
+  grep describe spec/code_spec.rb >/dev/null
 check
 
 it 'uses no template for no extension'
