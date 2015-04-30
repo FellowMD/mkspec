@@ -3,6 +3,8 @@ mkspec
 
 A small tool for making matching spec & production code files.
 
+Note: this is only tested on OSX. Specifically it uses `mktemp` flags that I think are platform-dependant.
+
 
 Usage
 -----
