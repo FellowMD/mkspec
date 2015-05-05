@@ -27,6 +27,10 @@ if [ "$extension" == .rb ]; then
 elif [ "$extension" == .sh ]; then
   sh_spec=$support_dir/spec.sh
   cp $sh_spec $spec_path/$spec_filename
+  if [ ! -f spec/shpec ]; then
+    shpec=$support_dir/shpec
+    cp $shpec spec
+  fi
 else
   touch $spec_path/$spec_filename
 fi

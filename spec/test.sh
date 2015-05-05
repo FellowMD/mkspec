@@ -59,3 +59,20 @@ it 'uses bash template for shell specs'
   $mkspec code.sh
   grep bash spec/code_spec.sh >/dev/null
 check
+
+it 'copies shpec to the spec folder'
+  $mkspec lib/code.sh
+  test -f spec/shpec
+check
+
+it 'does not overwrite an existing shpec'
+  mkdir spec
+  echo still here > spec/shpec
+  $mkspec code.sh
+  grep 'still here' spec/shpec >/dev/null
+check
+
+it 'does not copy shpec for non-shell specs'
+  $mkspec thing
+  test ! -f spec/shpec
+check
