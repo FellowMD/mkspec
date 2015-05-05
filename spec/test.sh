@@ -54,3 +54,8 @@ it 'uses no template for no extension'
   $mkspec code
   test ! -s spec/code_spec
 check
+
+it 'uses bash template for shell specs'
+  $mkspec code.sh
+  grep bash spec/code_spec.sh >/dev/null
+check

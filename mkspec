@@ -19,10 +19,14 @@ mkdir -p $path
 mkdir -p $spec_path
 touch $path/$prod_filename
 
-if [ "$extension" ]; then
-  support_dir=`dirname $0`/support/mkspec
+support_dir=`dirname $0`/support/mkspec
+
+if [ "$extension" == .rb ]; then
   rb_spec=$support_dir/spec.rb
   cp $rb_spec $spec_path/$spec_filename
+elif [ "$extension" == .sh ]; then
+  sh_spec=$support_dir/spec.sh
+  cp $sh_spec $spec_path/$spec_filename
 else
   touch $spec_path/$spec_filename
 fi
