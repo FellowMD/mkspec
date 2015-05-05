@@ -45,14 +45,14 @@ it 'strips app from beginning of spec paths'
   test -f spec/models/code_spec.rb
 check
 
-it 'uses a template for ruby specs'
-  $mkspec code.rb
-  grep describe spec/code_spec.rb >/dev/null
-check
-
 it 'uses no template for no extension'
   $mkspec code
   test ! -s spec/code_spec
+check
+
+it 'uses rspec template for ruby specs'
+  $mkspec code.rb
+  grep describe spec/code_spec.rb >/dev/null
 check
 
 it 'uses bash template for shell specs'
@@ -60,9 +60,14 @@ it 'uses bash template for shell specs'
   grep bash spec/code_spec.sh >/dev/null
 check
 
-it 'copies shpec to the spec folder'
+it 'uses executable bash template'
+  $mkspec code.sh
+  test -x spec/code_spec.sh
+check
+
+it 'includes a passing test in the shell spec'
   $mkspec lib/code.sh
-  test -f spec/shpec
+  spec/lib/code_spec.sh | grep '✓' >/dev/null
 check
 
 it 'does not overwrite an existing shpec'
@@ -73,6 +78,7 @@ it 'does not overwrite an existing shpec'
 check
 
 it 'does not copy shpec for non-shell specs'
-  $mkspec thing
+  $mkspec code
   test ! -f spec/shpec
 check
+
