@@ -1,40 +1,10 @@
 #!/usr/bin/env bash
 
-sandbox_dir=`mktemp -d -t sandbox`
-trap 'rm -rf $sandbox_dir' EXIT
 
 mkspec=$(cd "$(dirname "$0")/.."; pwd)/mkspec
 
-cd $sandbox_dir
+source `dirname $0`/shpec
 
-function it {
-  current_test="$1"
-}
-
-function pass {
-  green='\033[0;32m'
-  clear_formatting='\033[0m'
-  echo -e "${green}✓ it ${current_test}${clear_formatting}"
-}
-
-function fail {
-  red='\033[0;31m'
-  clear_formatting='\033[0m'
-  echo -e "${red}✗ it ${current_test}${clear_formatting}"
-}
-
-function wipe {
-  rm -rf $sandbox_dir/*
-}
-
-function check {
-  if [ "$?" == 0 ]; then
-    pass
-  else
-    fail
-  fi
-  wipe
-}
 
 it 'exists'
   test -x $mkspec
